@@ -7,7 +7,7 @@ function UpdateTask() {
     const uselocation = useLocation();
 
     const [users, setUsers] = useState([]);
-    const [_id, setID] = useState(uselocation.state.task._id);
+    const [_id] = useState(uselocation.state.task._id);
     const [title, setTitle] = useState(uselocation.state.task.title);
     const [desc, setDesc] = useState(uselocation.state.task.desc);
     const [dueDate, setDueDate] = useState(uselocation.state.task.dueDate);
@@ -16,7 +16,6 @@ function UpdateTask() {
 
     
     const url = "http://localhost:3333/users";
-    const taskUpdateUrl = "http://localhost:3333/tasks";
 
 
     const fetchUsers = async (url) => {

@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function AddTask() {
+
+    const navigate = useNavigate();
     
     const [users, setUsers] = useState([]);
     const [title, setTitle] = useState("");
@@ -70,7 +73,10 @@ function AddTask() {
 		const url = 'http://localhost:3333/addtask';
 
         fetch(url, requestOptions)
-			.then(console.log)
+			.then(()=>{
+                alert("Task added")
+            })
+        navigate("/tasks");
     }
 
     return (

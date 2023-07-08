@@ -26,11 +26,23 @@ function UserCrud() {
         fetchTasks(tasksUrl);
     }, [])
     function handleUpdate(task){
-        // console.log(task);
         navigate('/updatetask', {state: {task:task}})
     }
     function handleDelete(_id){
-        console.log(_id);
+        const requestOptions = {
+			method: 'DELETE',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({_id:_id})
+		};
+		const url = 'http://localhost:3333/deletetask';
+
+        fetch(url, requestOptions)
+			.then(console.log)
+        alert("Deleted");
+        const newTasks = tasks.filter(task=>task._id != _id);
+        setTasks(newTasks);
+        // navigate("/tasks");
+
     }
 
     function createTaskRow(task) {
@@ -77,32 +89,6 @@ function UserCrud() {
                         <hr />
                     </div>
                     {tasks.map(task => createTaskRow(task))}
-                    {/* <table className="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Description</th>
-                                <th>Due Date</th>
-                                <th>Status</th>
-                                <th>Assigned User</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {tasks.map((task) => { createTaskRow(task) })}
-                            <tr>    
-                                <td>Task 1</td>
-                                <td>Task 1 desc</td>
-                                <td>22.11.2023</td>
-                                <td>Pending</td>
-                                <td>Omprakash</td>
-                                <td>
-                                    <button type="button" className="btn btn-outline-info">Update</button>
-                                    <button type="button" className="btn btn-danger">Delete</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table> */}
                 </div>
             </div>
         </div>

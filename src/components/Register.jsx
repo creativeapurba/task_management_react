@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
+
+    const navigate = useNavigate();
 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -34,7 +37,12 @@ function Register() {
 		const url = 'http://localhost:3333/register';
 
         fetch(url, requestOptions)
-			.then(console.log)
+			.then(()=>{
+                alert("Registration Successful")
+            })
+
+        
+        navigate("/")
 
     }
 
