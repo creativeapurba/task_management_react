@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function Login() {
 
@@ -13,14 +14,14 @@ function Login() {
             password: password
         }
         const requestOptions = {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(user)
-		};
-		const url = 'http://localhost:3333/login';
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(user)
+        };
+        const url = 'http://localhost:3333/login';
 
         fetch(url, requestOptions)
-			.then(console.log)
+            .then(console.log)
     }
     function handleEmailChange(event) {
         setEmail(event.target.value);
@@ -28,7 +29,7 @@ function Login() {
 
     }
 
-    function handlePasswordChange(event){
+    function handlePasswordChange(event) {
         setPassword(event.target.value);
     }
     return (
@@ -44,7 +45,7 @@ function Login() {
                             <div className="form-outline mb-4">
                                 <input type="email" className="form-control form-control-lg"
                                     placeholder="Enter a valid email address"
-                                    onChange={(event)=>handleEmailChange(event)} value={email}
+                                    onChange={(event) => handleEmailChange(event)} value={email}
                                 />
                                 <label className="form-label" >Email address</label>
                             </div>
@@ -52,7 +53,7 @@ function Login() {
                             <div className="form-outline mb-3">
                                 <input type="password" className="form-control form-control-lg"
                                     placeholder="Enter password"
-                                    onChange={(event)=>handlePasswordChange(event)} value={password}
+                                    onChange={(event) => handlePasswordChange(event)} value={password}
                                 />
                                 <label className="form-label" >Password</label>
                             </div>
@@ -63,8 +64,11 @@ function Login() {
                                     style={{ "paddingLeft": "2.5rem", "paddingRight": "2.5rem" }} onClick={login}>
                                     Login
                                 </button>
-                                <p className="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="/register"
-                                    className="link-danger">Register</a></p>
+
+                                <p className="small fw-bold mt-2 pt-1 mb-0">Don't have an account?
+                                    <Link to="/register" className="link-danger">Register</Link>
+                                </p>
+
                             </div>
 
                         </form>

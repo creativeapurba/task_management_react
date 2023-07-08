@@ -4,15 +4,20 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Register from './components/Register';
 import UserCrud from './components/UserCrud';
 import AddTask from './components/AddTask';
+import UpdateTask from './components/UpdateTask';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-      {/* <Login /> */}
-      {/* <Register /> */}
-      {/* <UserCrud /> */}
-      <AddTask />
-    </div>
+    <Router>
+        <Routes>
+          <Route path='/' element={<Login />} />
+          <Route path='/register' element={<Register />} />
+          <Route path='/tasks' element={<UserCrud />} />
+          <Route path='/addtask' element={<AddTask />} />
+          <Route path='/updatetask' element={<UpdateTask />} />
+        </Routes>
+      </Router>
   );
 }
 

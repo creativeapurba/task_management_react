@@ -1,12 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function AddTask() {
-
+    
+    const [users, setUsers] = useState([]);
     const [title, setTitle] = useState("");
     const [desc, setDesc] = useState("");
     const [dueDate, setDueDate] = useState("");
     const [status, setStatus] = useState("Select One");
     const [assignedUser, setAssignedUser] = useState("Select One");
+
+    const url = "http://localhost:3333/users";
+
+    const fetchUsers = async (url) => {
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            console.log(data);
+            if (data.length > 0) {
+                setUsers(data);
+            }
+        }
+        catch (err) {
+            console.error(err);
+        }
+    }
+
+    useEffect(() => {
+        fetchUsers(url);
+    }, [])
+
 
     function handleTitleChange(event) {
         setTitle(event.target.value);
@@ -24,13 +46,15 @@ function AddTask() {
         setAssignedUser(event.target.value);
     }
 
+    function createUserOption(user){
+        return(
+            <option key={user._id}>{user.name}</option>
+        )
+    }
+
 
     function addTask() {
-        // console.log(title);
-        // console.log(desc);
-        // console.log(dueDate);
-        // console.log(status);
-        // console.log(assignedUser);
+        
         const newTask = {
             title: title,
             desc: desc,
@@ -89,9 +113,7 @@ function AddTask() {
                         onChange={(event) => { handleAssignedUserChange(event) }} value={assignedUser}
                     >
                         <option>Select One</option>
-                        <option>User 1</option>
-                        <option>User 2</option>
-                        <option>User 3</option>
+                        {users.map(user=>createUserOption(user))}
                     </select>
                 </div>
             </div>

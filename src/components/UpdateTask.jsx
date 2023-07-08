@@ -1,13 +1,44 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function UpdateTask() {
 
-    const [title, setTitle] = useState("");
-    const [desc, setDesc] = useState("");
-    const [dueDate, setDueDate] = useState("");
-    const [status, setStatus] = useState("Select One");
-    const [assignedUser, setAssignedUser] = useState("Select One");
+    const navigate = useNavigate();
+    const uselocation = useLocation();
 
+    const [users, setUsers] = useState([]);
+    const [_id, setID] = useState(uselocation.state.task._id);
+    const [title, setTitle] = useState(uselocation.state.task.title);
+    const [desc, setDesc] = useState(uselocation.state.task.desc);
+    const [dueDate, setDueDate] = useState(uselocation.state.task.dueDate);
+    const [status, setStatus] = useState(uselocation.state.task.status);
+    const [assignedUser, setAssignedUser] = useState(uselocation.state.task.assignedUser);
+
+    
+    const url = "http://localhost:3333/users";
+    const taskUpdateUrl = "http://localhost:3333/tasks";
+
+
+    const fetchUsers = async (url) => {
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            console.log(data);
+            if (data.length > 0) {
+                setUsers(data);
+            }
+        }
+        catch (err) {
+            console.error(err);
+        }
+    }
+
+
+    useEffect(() => {
+        fetchUsers(url);
+    }, [])
+
+    // console.log(tasks);
     function handleTitleChange(event) {
         setTitle(event.target.value);
     }
@@ -24,14 +55,16 @@ function UpdateTask() {
         setAssignedUser(event.target.value);
     }
 
+    function createUserOption(user){
+        return(
+            <option key={user._id}>{user.name}</option>
+        )
+    }
 
     function updateTask() {
-        // console.log(title);
-        // console.log(desc);
-        // console.log(dueDate);
-        // console.log(status);
-        // console.log(assignedUser);
+
         const newTask = {
+            _id: _id,
             title: title,
             desc: desc,
             dueDate: dueDate,
@@ -47,6 +80,7 @@ function UpdateTask() {
 
         fetch(url, requestOptions)
 			.then(console.log)
+        navigate("/tasks")
     }
 
     return (
@@ -77,7 +111,7 @@ function UpdateTask() {
                     <select id="inputStatus" className="form-control"
                         onChange={(event) => { handleStatusChange(event) }} value={status}
                     >
-                        <option>Select One</option>
+                        {/* <option>Select One</option> */}
                         <option>Done</option>
                         <option>Partially</option>
                         <option>Pending</option>
@@ -89,9 +123,7 @@ function UpdateTask() {
                         onChange={(event) => { handleAssignedUserChange(event) }} value={assignedUser}
                     >
                         <option>Select One</option>
-                        <option>User 1</option>
-                        <option>User 2</option>
-                        <option>User 3</option>
+                        {users.map(user=>createUserOption(user))}
                     </select>
                 </div>
             </div>
