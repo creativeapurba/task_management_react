@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
     function login() {
         // console.log(email);
@@ -21,7 +22,15 @@ function Login() {
         const url = 'http://localhost:3333/login';
 
         fetch(url, requestOptions)
-            .then(console.log)
+            .then((res)=>{
+                // console.log(res.status);
+                if(res.status === 200){
+                    navigate("/tasks");
+                }
+                else{
+                    alert("Invalid Credential");
+                }
+            })
     }
     function handleEmailChange(event) {
         setEmail(event.target.value);

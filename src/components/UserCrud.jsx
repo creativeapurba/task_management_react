@@ -39,7 +39,7 @@ function UserCrud() {
         fetch(url, requestOptions)
 			.then(console.log)
         alert("Deleted");
-        const newTasks = tasks.filter(task=>task._id != _id);
+        const newTasks = tasks.filter(task=>task._id !== _id);
         setTasks(newTasks);
         // navigate("/tasks");
 
